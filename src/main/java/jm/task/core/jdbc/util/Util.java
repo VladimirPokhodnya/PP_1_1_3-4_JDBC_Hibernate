@@ -8,36 +8,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class Util {
-    public final static String URL = "jdbc:mysql://localhost:3306/preproject_db";
-    public final static String USERNAME = "admin";
-    public final static String PASSWORD = "admin1234@";
-
-    public static Connection getConnection() {
-        Connection connection = null;
-
-        try {
-            Driver driver = new com.mysql.cj.jdbc.Driver();
-            DriverManager.registerDriver(driver);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            if (!connection.isClosed()) {
-                System.out.println("Connection is established!");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return connection;
-    }
-
     public static SessionFactory getSessionFactory() {
         SessionFactory sessionFactory = null;
 
@@ -60,7 +33,7 @@ public class Util {
                 .applySettings(configuration.getProperties()).build();
 
         try {
-           sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         } catch (HibernateException e) {
             StandardServiceRegistryBuilder.destroy(serviceRegistry);
         }
