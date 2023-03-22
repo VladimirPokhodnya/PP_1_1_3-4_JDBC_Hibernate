@@ -4,40 +4,31 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
+@Table
 @Entity
-@Table(name="users")
 public class User {
     @Id
-    @Column(name="id")
     private Long id;
 
-    @Column(name="name")
+    @Column
     private String name;
 
-    @Column(name="lastName")
+    @Column
     private String lastName;
 
-    @Column(name = "age")
+    @Column
     private Byte age;
 
     public User() {
+
     }
 
     public User(String name, String lastName, Byte age) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-               "id=" + id +
-               ", name='" + name + '\'' +
-               ", lastName='" + lastName + '\'' +
-               ", age=" + age +
-               '}';
     }
 
     public Long getId() {
@@ -70,5 +61,28 @@ public class User {
 
     public void setAge(Byte age) {
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        User that = (User) obj;
+        return id.equals(that.id) && name.equals(that.name)
+                && lastName.equals(that.lastName) && Objects.equals(age, that.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastName, age);
+    }
+
+    @Override
+    public String toString() {
+        return "User{%s, %s, %d}".formatted(getName(), getLastName(), getAge());
     }
 }
