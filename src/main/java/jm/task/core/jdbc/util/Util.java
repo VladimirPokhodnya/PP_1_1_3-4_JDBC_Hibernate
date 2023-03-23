@@ -14,20 +14,22 @@ import java.util.Properties;
 
 public class Util {
 
-    private  static String URL = "jdbc:mysql://localhost:3306/users_db";
-    private  static String USERNAME = "user";
-    private  static String PASSWORD = "1234";
-   private static Connection connection;
-   static   {
+    private static String URL = "jdbc:mysql://localhost:3306/users_db";
+    private static String USERNAME = "user";
+    private static String PASSWORD = "1234";
+    private static Connection connection;
+
+    static {
         try {
-            connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException("Не удалось установить соединение с базой данных");
         }
     }
-   public static Connection getConnection() {
-       return connection;
-   }
+
+    public static Connection getConnection() {
+        return connection;
+    }
 
     private static SessionFactory sessionFactory;
 
@@ -54,12 +56,13 @@ public class Util {
             }
         }
     }
+
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
     public static void close() {
-        if(!sessionFactory.isClosed()) {
+        if (!sessionFactory.isClosed()) {
             sessionFactory.close();
         }
         try {
@@ -68,5 +71,4 @@ public class Util {
             throw new RuntimeException(e);
         }
     }
-
 }
