@@ -12,10 +12,10 @@ public class Main {
         UserService userService = new UserServiceImpl();
 
         List<User> users = new ArrayList<>();
-        users.add(new User("Ruslan", "Abramov", (byte) 23));
-        users.add(new User("Roman", "Perov", (byte) 21));
-        users.add(new User("Oksana", "Zhdanova", (byte) 39));
-        users.add(new User("Dmitriy", "Komarov", (byte) 35));
+        users.add(new User("Николай", "Щеглов", (byte) 34));
+        users.add(new User("Олег", "Кротов", (byte) 16));
+        users.add(new User("Светлана", "Кучина", (byte) 41));
+        users.add(new User("Геннадий", "Ставкин", (byte) 27));
 
         userService.createUsersTable();
         for (User user: users) {

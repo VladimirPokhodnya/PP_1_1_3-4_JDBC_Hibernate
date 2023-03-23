@@ -15,7 +15,7 @@ public class Util {
         SessionFactory sessionFactory = null;
 
         Properties settings = new Properties();
-        settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+        settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
         settings.put(Environment.URL, "jdbc:mysql://localhost:3306/users_db");
         settings.put(Environment.USER, "user");
         settings.put(Environment.PASS, "1234");
