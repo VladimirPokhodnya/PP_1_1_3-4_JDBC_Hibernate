@@ -14,20 +14,22 @@ import java.util.Properties;
 
 public class Util {
 
-    private  static String URL = "jdbc:mysql://localhost:3306";
-    private  static String USERNAME = "user";
-    private  static String PASSWORD = "1234";
-   private static Connection connection;
-   static   {
+    private static String URL = "jdbc:mysql://localhost:3306/users_db";
+    private static String USERNAME = "user";
+    private static String PASSWORD = "1234";
+    private static Connection connection;
+
+    static {
         try {
-            connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException("Не удалось установить соединение с базой данных");
         }
     }
-   public static Connection getConnection() {
-       return connection;
-   }
+
+    public static Connection getConnection() {
+        return connection;
+    }
 
     private static SessionFactory sessionFactory;
 
@@ -35,42 +37,38 @@ public class Util {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
-
-                // Hibernate settings equivalent to hibernate.cfg.xml's properties
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
                 settings.put(Environment.URL, "jdbc:mysql://localhost:3306/users_db");
                 settings.put(Environment.USER, "user");
                 settings.put(Environment.PASS, "1234");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-
                 settings.put(Environment.SHOW_SQL, "false");
-
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-
                 settings.put(Environment.HBM2DDL_AUTO, "update");
-
                 configuration.setProperties(settings);
-
                 configuration.addAnnotatedClass(User.class);
-
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
-
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
     public static void close() {
-        if(!sessionFactory.isClosed()) {
+        if (!sessionFactory.isClosed()) {
             sessionFactory.close();
         }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 }
